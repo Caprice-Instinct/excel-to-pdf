@@ -14,12 +14,18 @@ for filepath in filepaths:
     # Extract the filename from filepath without the extension
     filename = Path(filepath).stem
 
-    # Extract the first number of the filename only
-    invoice_nr = filename.split("-")[0]
+    # Extract the invoice number and date
+    invoice_nr, invoice_date = filename.split("-")
 
     # Pdf creation
     pdf = FPDF(orientation="P", unit="mm", format="A4")
     pdf.add_page()
+
     pdf.set_font(family="Times", style="B", size=16)
-    pdf.cell(w=50, h=8, txt=f"Invoice nr. {invoice_nr}")
+    pdf.cell(w=50, h=8, txt=f"Invoice nr. {invoice_nr}", ln=1)
+
+    pdf.set_font(family="Times", style="B", size=16)
+    pdf.cell(w=50, h=8, txt=f"Date: {invoice_date}", ln=1)
+
+    # Produce pdf output
     pdf.output(f"PDFs/{filename}.pdf")
